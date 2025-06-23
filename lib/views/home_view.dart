@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -35,9 +36,9 @@ class HomeView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Nome da tarefa'),
+                      const Text('Navegar para adicionar tarefa'),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => context.push('/add'),
                         icon: const Icon(Icons.edit),
                       ),
                     ],
