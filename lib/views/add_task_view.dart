@@ -1,3 +1,4 @@
+import 'package:bank/controller/task_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,14 @@ class AddTaskView extends StatefulWidget {
 }
 
 class _AddTaskViewState extends State<AddTaskView> {
+  final TextEditingController _taskController = TextEditingController();
+  final TaskController _controller = TaskController();
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +31,22 @@ class _AddTaskViewState extends State<AddTaskView> {
           children: [
             SizedBox(height: 24),
             TextField(
+              controller: _taskController,
               decoration: InputDecoration(
                 labelText: 'Digite a nova tarefa!',
                 border: OutlineInputBorder(),
-                icon: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => context.pop(),
-                ),
               ),
             ),
             SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                if (_taskController.text.trim().isNotEmpty) {
+                  _controller.addTask(_taskController.text.trim());
+                  context.pop();
+                }
+              },
+              child: Text('Adicionar'),
+            ),
           ],
         ),
       ),

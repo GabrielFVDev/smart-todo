@@ -10,13 +10,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late TaskController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TaskController();
-  }
+  final TaskController _controller = TaskController();
 
   @override
   void dispose() {
