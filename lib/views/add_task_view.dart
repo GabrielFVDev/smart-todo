@@ -15,27 +15,18 @@ class AddTaskView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Bem vindo!'),
-            SizedBox(height: 12),
-            Text('Pronto para finalizar as tarefas?'),
             SizedBox(height: 24),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Nome da tarefa'),
-                      IconButton(
-                        onPressed: () => context.pop(),
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                ],
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Digite a nova tarefa!',
+                border: OutlineInputBorder(),
+                icon: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => context.pop(),
+                ),
               ),
             ),
+            SizedBox(height: 24),
           ],
         ),
       ),
