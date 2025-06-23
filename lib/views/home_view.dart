@@ -1,8 +1,26 @@
+import 'package:bank/controller/task_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late TaskController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TaskController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +38,23 @@ class HomeView extends StatelessWidget {
             Text('Pronto para finalizar as tarefas?'),
             SizedBox(height: 24),
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Nome da tarefa'),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Navegar para adicionar tarefa'),
-                      IconButton(
-                        onPressed: () => context.push('/add'),
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                ],
+              child: ListenableBuilder(
+                listenable: _controller,
+                builder: (context, child) {
+                  return ListView.builder(
+                    itemCount: _controller.tasks.length,
+                    itemBuilder: (context, index) {
+                      final task = _controller.tasks[index];
+                      return ListTile(
+                        title: Text(task),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _controller.removeTask(task),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],
