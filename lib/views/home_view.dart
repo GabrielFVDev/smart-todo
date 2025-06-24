@@ -62,7 +62,7 @@ class _HomeViewState extends State<HomeView> {
                     itemBuilder: (context, index) {
                       final task = _controller.tasks[index];
                       return ListTile(
-                        title: Text(task),
+                        title: Text(task.title),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () => _controller.removeTask(task),
@@ -75,6 +75,10 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push('/add'),
+        child: Icon(Icons.arrow_back),
       ),
     );
   }

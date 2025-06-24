@@ -15,6 +15,7 @@ class _AddTaskViewState extends State<AddTaskView> {
 
   @override
   void dispose() {
+    _taskController.dispose();
     super.dispose();
   }
 
@@ -40,8 +41,9 @@ class _AddTaskViewState extends State<AddTaskView> {
             SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                if (_taskController.text.trim().isNotEmpty) {
-                  _controller.addTask(_taskController.text.trim());
+                final text = _taskController.text.trim();
+                if (text.isNotEmpty) {
+                  _controller.addTask(text);
                   context.pop();
                 }
               },

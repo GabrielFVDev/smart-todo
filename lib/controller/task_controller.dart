@@ -1,3 +1,4 @@
+import 'package:bank/model/task_model.dart';
 import 'package:flutter/material.dart';
 
 class TaskController extends ChangeNotifier {
@@ -9,19 +10,24 @@ class TaskController extends ChangeNotifier {
 
   TaskController._internal();
 
-  final List<String> _tasks = [];
+  final List<TaskModel> _tasks = [];
 
-  List<String> get tasks => List.unmodifiable(_tasks);
+  List<TaskModel> get tasks => List.unmodifiable(_tasks);
 
-  void addTask(String task) {
-    if (task.isNotEmpty) {
+  void addTask(String title) {
+    if (title.trim().isNotEmpty) {
+      final task = TaskModel(
+        id: _tasks.length + 1,
+        title: title.trim(),
+        category: 'Geral', // Categoria padrão
+      );
       _tasks.add(task);
-      print("Tarefa adicionada: $task. Total: ${_tasks.length}");
+      print('Tarefa adicionada: ${task.title}. Total: ${_tasks.length}');
       notifyListeners();
     }
   }
 
-  void removeTask(String task) {
+  void removeTask(TaskModel task) {
     _tasks.remove(task);
     notifyListeners();
   }
