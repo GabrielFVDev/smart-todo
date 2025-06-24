@@ -1,9 +1,11 @@
 class CategoryModel {
-  int id;
-  String name;
+  final int id;
+  final String name;
+  final bool isDefault;
 
-  CategoryModel({
+  const CategoryModel({
     required this.id,
     required this.name,
+    this.isDefault = false,
   });
 }

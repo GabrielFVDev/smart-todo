@@ -1,7 +1,9 @@
+import 'package:bank/model/category_model.dart';
+
 class TaskModel {
   int id;
   String title;
-  String category;
+  CategoryModel category;
   bool favorite;
   bool completed;
 
