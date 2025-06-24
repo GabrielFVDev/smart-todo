@@ -43,4 +43,36 @@ class TaskController extends ChangeNotifier {
   List<TaskModel> getTasksByCategory(CategoryModel category) {
     return _tasks.where((task) => task.category.id == category.id).toList();
   }
+
+  void toggleFavorite(TaskModel task) {
+    final favoriteCategory = _categoryController.categories.firstWhere(
+      (c) => c.name == 'Favoritos',
+    );
+    final defaultCategory = _categoryController.defaultCategory;
+
+    // Remove a tarefa atual
+    removeTask(task);
+
+    // Adiciona novamente com a categoria apropriada
+    if (task.category.id == favoriteCategory.id) {
+      // Se já era favorito, muda para categoria padrão
+      addTask(task.title, category: defaultCategory);
+    } else {
+      // Se não era favorito, adiciona aos favoritos
+      addTask(task.title, category: favoriteCategory);
+    }
+  }
+
+  // Obter tarefas favoritas
+  List<TaskModel> get favoriteTasks {
+    final favoriteCategory = _categoryController.categories.firstWhere(
+      (c) => c.name == 'Favoritos',
+    );
+    return getTasksByCategory(favoriteCategory);
+  }
+
+  // Obter tarefas regulares
+  List<TaskModel> get regularTasks {
+    return getTasksByCategory(_categoryController.defaultCategory);
+  }
 }

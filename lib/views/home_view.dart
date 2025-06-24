@@ -1,4 +1,5 @@
 import 'package:bank/controller/task_controller.dart';
+import 'package:bank/views/widgets/task_section_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,11 +12,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final TaskController _controller = TaskController();
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,19 +53,29 @@ class _HomeViewState extends State<HomeView> {
                       );
                     }
 
-                    // Se houver tarefas, exibe a lista
-                    return ListView.builder(
-                      itemCount: _controller.tasks.length,
-                      itemBuilder: (context, index) {
-                        final task = _controller.tasks[index];
-                        return ListTile(
-                          title: Text(task.title),
-                          trailing: IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () => _controller.removeTask(task),
+                    return SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Seção de favoritos
+                          TaskSectionWidget(
+                            title: 'Favoritas',
+                            icon: Icons.star,
+                            tasks: _controller.favoriteTasks,
+                            onDelete: _controller.removeTask,
+                            onToggleFavorite: _controller.toggleFavorite,
                           ),
-                        );
-                      },
+
+                          // Seção de tarefas normais
+                          TaskSectionWidget(
+                            title: 'Tarefas',
+                            icon: Icons.task_alt,
+                            tasks: _controller.regularTasks,
+                            onDelete: _controller.removeTask,
+                            onToggleFavorite: _controller.toggleFavorite,
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -80,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/add'),
-        child: Icon(Icons.arrow_back),
+        child: Icon(Icons.add_task),
       ),
     );
   }
