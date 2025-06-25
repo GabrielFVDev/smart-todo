@@ -1,5 +1,5 @@
-import 'package:bank/controller/category_controller.dart';
-import 'package:bank/controller/task_controller.dart';
+import 'package:bank/controllers/category_controller.dart';
+import 'package:bank/controllers/task_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,4 +1,4 @@
-import 'package:bank/controller/task_controller.dart';
+import 'package:bank/controllers/task_controller.dart';
 import 'package:bank/views/widgets/task_section_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

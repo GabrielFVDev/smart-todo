@@ -1,4 +1,4 @@
-import 'package:bank/model/task_model.dart';
+import 'package:bank/models/task_model.dart';
 import 'package:bank/views/widgets/task_item_widget.dart';
 import 'package:flutter/material.dart';
 
