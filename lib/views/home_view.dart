@@ -16,19 +16,33 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 24.0,
+            horizontal: 24.0,
+            vertical: 32.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Bem vindo!'),
-              SizedBox(height: 12),
-              Text('Pronto para finalizar as tarefas?'),
-              SizedBox(height: 24),
+              Text(
+                'Tarefas',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Organize seu dia',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              SizedBox(height: 40),
               Expanded(
                 child: ListenableBuilder(
                   listenable: _controller,
@@ -37,17 +51,49 @@ class _HomeViewState extends State<HomeView> {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Nenhuma tarefa adicionada, deseja adicionar?',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
+                          Container(
+                            width: 120,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade50,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              size: 48,
+                              color: Colors.blue.shade400,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 32),
+                          Text(
+                            'Nenhuma tarefa ainda',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'Comece organizando suas tarefas. Toque\nno botão + para adicionar sua primeira\ntarefa.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade600,
+                              height: 1.5,
+                            ),
+                          ),
+                          SizedBox(height: 32),
                           TextButton(
                             onPressed: () => context.push('/add'),
-                            child: Text('Clique aqui para adicionar'),
+                            child: Text(
+                              'Adicionar primeira tarefa',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.blue.shade600,
+                              ),
+                            ),
                           ),
                         ],
                       );
@@ -88,7 +134,8 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/add'),
-        child: Icon(Icons.add_task),
+        backgroundColor: Colors.blue.shade600,
+        child: Icon(Icons.add, color: Colors.white),
       ),
     );
   }

@@ -29,6 +29,10 @@ class TaskController extends ChangeNotifier {
     return _tasks.where((task) => task.category.id == category.id).toList();
   }
 
+  bool _isCreatingFavorite = false;
+
+  bool get isCreatingFavorite => _isCreatingFavorite;
+
   List<TaskModel> get favoriteTasks {
     final favoriteCategory = _categoryController.getCategoryByName('Favoritos');
     if (favoriteCategory == null) return [];
@@ -133,6 +137,17 @@ class TaskController extends ChangeNotifier {
   Future removeTask(TaskModel task) async {
     _tasks.removeWhere((t) => t.id == task.id);
     await _saveTasks();
+    notifyListeners();
+  }
+
+  void toggleCreatingFavorite() {
+    _isCreatingFavorite = !_isCreatingFavorite;
+    notifyListeners();
+  }
+
+  // Resetar estado de criação
+  void resetCreatingState() {
+    _isCreatingFavorite = false;
     notifyListeners();
   }
 

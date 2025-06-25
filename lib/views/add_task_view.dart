@@ -15,79 +15,115 @@ class _AddTaskViewState extends State<AddTaskView> {
   final TaskController _controller = TaskController();
   final CategoryController _categoryController = CategoryController();
 
-  bool _isFavorite = false;
+  @override
+  void dispose() {
+    _taskController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Nova Tarefa'),
+        title: Text(
+          'Nova Tarefa',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 24.0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _taskController,
-              decoration: InputDecoration(
-                labelText: 'Digite a nova tarefa!',
-                border: OutlineInputBorder(),
-              ),
+      body: ListenableBuilder(
+        listenable: _controller,
+        builder: (context, child) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 24.0,
             ),
-            SizedBox(height: 16),
-
-            // Opção de favorito
-            SwitchListTile(
-              title: Row(
-                children: [
-                  Icon(
-                    _isFavorite ? Icons.star : Icons.star_border,
-                    color: _isFavorite ? Colors.amber : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      color: Colors.grey[300]!,
+                      width: 1.0,
+                    ),
                   ),
-                  SizedBox(width: 8),
-                  Text('Adicionar aos favoritos'),
-                ],
-              ),
-              value: _isFavorite,
-              onChanged: (value) {
-                setState(() {
-                  _isFavorite = value;
-                });
-              },
-            ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 16),
+                      Text('Titulo da tarefa'),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: _taskController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 24),
+                      InkWell(
+                        onTap: () => _controller.toggleCreatingFavorite(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Favoritar?'),
+                            SizedBox(width: 16),
+                            Icon(
+                              Icons.favorite,
+                              color:
+                                  _controller.isCreatingFavorite
+                                      ? Colors.red
+                                      : Colors.grey,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 40,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => context.pop(),
+                      child: Text('Cancelar'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final text = _taskController.text.trim();
+                        if (text.isNotEmpty) {
+                          final category =
+                              _controller.isCreatingFavorite
+                                  ? _categoryController.categories.firstWhere(
+                                    (c) => c.name == 'Favoritos',
+                                  )
+                                  : _categoryController.defaultCategory;
 
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                final text = _taskController.text.trim();
-                if (text.isNotEmpty) {
-                  // Escolhe a categoria com base no estado do switch
-                  final category =
-                      _isFavorite
-                          ? _categoryController.categories.firstWhere(
-                            (c) => c.name == 'Favoritos',
-                          )
-                          : _categoryController.defaultCategory;
-
-                  _controller.addTask(text, category: category);
-                  context.pop();
-                }
-              },
-              child: Text('Adicionar'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 48),
-              ),
+                          _controller.addTask(text, category: category);
+                          context.pop();
+                        }
+                      },
+                      child: Text('Criar tarefa'),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
