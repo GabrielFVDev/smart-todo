@@ -29,7 +29,6 @@ class CategoryModel {
     );
   }
 
-  // Para facilitar comparações e uso em coleções
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

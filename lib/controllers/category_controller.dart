@@ -7,10 +7,8 @@ class CategoryController extends ChangeNotifier {
   final StorageRepository _storage = StorageRepository();
   final String _storageKey = 'categories_data';
 
-  // Lista de categorias
   final List<CategoryModel> _categories = [];
 
-  // Singleton
   factory CategoryController() {
     return _instance;
   }
@@ -19,7 +17,6 @@ class CategoryController extends ChangeNotifier {
     _init();
   }
 
-  // Inicialização
   Future _init() async {
     await _loadCategories();
     if (_categories.isEmpty) {
@@ -28,7 +25,6 @@ class CategoryController extends ChangeNotifier {
     }
   }
 
-  // Getters
   List<CategoryModel> get categories => List.unmodifiable(_categories);
 
   CategoryModel get defaultCategory {
@@ -55,13 +51,11 @@ class CategoryController extends ChangeNotifier {
     }
   }
 
-  // Inicializar categorias padrão
   void _initDefaultCategories() {
     _categories.add(CategoryModel(id: 1, name: 'Geral', isDefault: true));
     _categories.add(CategoryModel(id: 2, name: 'Favoritos', icon: 'star'));
   }
 
-  // Carregar categorias do storage
   Future _loadCategories() async {
     final data = await _storage.loadData(_storageKey);
     if (data.isNotEmpty) {
@@ -73,18 +67,15 @@ class CategoryController extends ChangeNotifier {
     }
   }
 
-  // Salvar categorias no storage
   Future _saveCategories() async {
     final data = _categories.map((c) => c.toJson()).toList();
     await _storage.saveData(_storageKey, data);
     notifyListeners();
   }
 
-  // Adicionar nova categoria
   Future addCategory(String name, {String icon = 'folder'}) async {
     if (name.trim().isEmpty) return;
 
-    // Encontra o próximo ID disponível
     final newId =
         _categories.isEmpty
             ? 1
@@ -101,9 +92,7 @@ class CategoryController extends ChangeNotifier {
     await _saveCategories();
   }
 
-  // Remover categoria
   Future removeCategory(int id) async {
-    // Não permite remover categorias padrão
     final category = getCategoryById(id);
     if (category == null || category.isDefault) return;
 
@@ -111,7 +100,6 @@ class CategoryController extends ChangeNotifier {
     await _saveCategories();
   }
 
-  // Resetar para as categorias padrão
   Future resetToDefaults() async {
     _categories.clear();
     _initDefaultCategories();

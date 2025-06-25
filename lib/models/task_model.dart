@@ -48,7 +48,6 @@ class TaskModel {
     );
   }
 
-  // Cria uma cópia da tarefa com valores potencialmente diferentes
   TaskModel copyWith({
     String? id,
     String? title,
