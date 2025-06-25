@@ -39,7 +39,6 @@ class TaskSectionWidget extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 12),
 
         // Lista de tarefas ou mensagem vazia
         tasks.isEmpty
@@ -67,7 +66,6 @@ class TaskSectionWidget extends StatelessWidget {
                 );
               },
             ),
-        SizedBox(height: 16),
       ],
     );
   }

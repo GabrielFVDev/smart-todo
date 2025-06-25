@@ -18,12 +18,6 @@ class _AddTaskViewState extends State<AddTaskView> {
   bool _isFavorite = false;
 
   @override
-  void dispose() {
-    _taskController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

@@ -12,6 +12,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        textTheme: const TextTheme().apply(
+          fontFamily: 'Poppins',
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500, // Medium
+            ),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            textStyle: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500, // Medium
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
