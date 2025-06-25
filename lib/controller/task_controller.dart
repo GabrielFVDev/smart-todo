@@ -30,6 +30,30 @@ class TaskController extends ChangeNotifier {
     }
   }
 
+  void updateTask(
+    TaskModel task, {
+    String? title,
+    CategoryModel? category,
+    bool? favorite,
+    bool? completed,
+  }) {
+    final index = _tasks.indexOf(task);
+    if (index != -1) {
+      _tasks[index] = TaskModel(
+        id: task.id,
+        title: title ?? task.title,
+        category: category ?? task.category,
+        favorite: favorite ?? task.favorite,
+        completed: completed ?? task.completed,
+      );
+      notifyListeners();
+    }
+  }
+
+  void updateTaskTitle(TaskModel task, String title) {
+    updateTask(task, title: title);
+  }
+
   void removeTask(TaskModel task) {
     _tasks.remove(task);
     notifyListeners();

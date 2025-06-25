@@ -64,6 +64,7 @@ class _HomeViewState extends State<HomeView> {
                             tasks: _controller.favoriteTasks,
                             onDelete: _controller.removeTask,
                             onToggleFavorite: _controller.toggleFavorite,
+                            onUpdateTask: _controller.updateTaskTitle,
                           ),
 
                           // Seção de tarefas normais
@@ -72,6 +73,7 @@ class _HomeViewState extends State<HomeView> {
                             icon: Icons.task_alt,
                             tasks: _controller.regularTasks,
                             onDelete: _controller.removeTask,
+                            onUpdateTask: _controller.updateTaskTitle,
                             onToggleFavorite: _controller.toggleFavorite,
                           ),
                         ],

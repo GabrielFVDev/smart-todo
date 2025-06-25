@@ -8,6 +8,8 @@ class TaskSectionWidget extends StatelessWidget {
   final List<TaskModel> tasks;
   final Function(TaskModel) onDelete;
   final Function(TaskModel) onToggleFavorite;
+  final Function(TaskModel, String) onUpdateTask;
+
   const TaskSectionWidget({
     super.key,
     required this.title,
@@ -15,6 +17,7 @@ class TaskSectionWidget extends StatelessWidget {
     required this.tasks,
     required this.onDelete,
     required this.onToggleFavorite,
+    required this.onUpdateTask,
   });
 
   @override
@@ -59,6 +62,7 @@ class TaskSectionWidget extends StatelessWidget {
                   task: tasks[index],
                   onDelete: onDelete,
                   onToggleFavorite: onToggleFavorite,
+                  onUpdateTask: onUpdateTask,
                   isFavorite: title == 'Favoritas',
                 );
               },
